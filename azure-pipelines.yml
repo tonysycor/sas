@@ -1,0 +1,36 @@
+
+trigger:
+- master
+variables:
+  azureSubscription: '#210000001C1737# Kst 195510 - SC-HUB DEV(4903d38f-fec1-4a2c-bd9f-79bb9eda788b)'
+  storageAccountName: 'sycorazplcy'
+  containerName: 'basicpolicy'
+  blobName: 'basicpolicywithcoy2.csv'
+  sasPermissions: 'r'
+  sasExpiry: '2024-01-06T00:00:00Z'
+
+pool:
+  vmImage: 'windows-latest'
+
+stages:
+- stage: GenerateSAS
+  jobs:
+  - job: GenerateSAS
+    displayName: 'Generate SAS Token'
+    steps:
+    - checkout: self
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core SDK'
+      inputs:
+        packageType: 'sdk'
+        version: '3.x'
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+        performMultiLevelLookup: true
+
+    - task: PowerShell@2
+      inputs:
+        filePath: 'sas.ps1'
+      env:
+        AZURE_AD_SERVICE_PRINCIPAL_ID: $(servicePrincipalId)
+        AZURE_AD_SERVICE_PRINCIPAL_KEY: $(servicePrincipalKey)
+        AZURE_AD_SERVICE_PRINCIPAL_TENANT: $(servicePrincipalTenantId)
