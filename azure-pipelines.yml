@@ -18,6 +18,7 @@ stages:
   - job: GenerateSAS
     displayName: 'Generate SAS Token'
     steps:
+    - checkout: self
     - task: UseDotNet@2
       displayName: 'Use .NET Core SDK'
       inputs:
