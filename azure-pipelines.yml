@@ -26,16 +26,20 @@ stages:
         version: '3.x'
         installationPath: $(Agent.ToolsDirectory)/dotnet
         performMultiLevelLookup: true
-    - task: PowerShell@2
+    - task: AzurePowerShell@5
       inputs:
-        targetType: 'inline'
-        script: |
-          Install-Module -Name Az -Repository PSGallery -Force
-          Update-Module -Name Az -Force
-    - task: PowerShell@2
+        azureSubscription: '#210000001C1737# Kst 195510 - SC-HUB DEV(4903d38f-fec1-4a2c-bd9f-79bb9eda788b)'
+        ScriptType: 'InlineScript'
+        Inline: 'Connect-AzAccount'
+        azurePowerShellVersion: 'LatestVersion'
+    - task: AzurePowerShell@5
       inputs:
-        filePath: 'sas.ps1'
+        azureSubscription: '#210000001C1737# Kst 195510 - SC-HUB DEV(4903d38f-fec1-4a2c-bd9f-79bb9eda788b)'
+        ScriptType: 'FilePath'
+        ScriptPath: 'sas.ps1'
+        azurePowerShellVersion: 'LatestVersion'
       env:
         AZURE_AD_SERVICE_PRINCIPAL_ID: $(servicePrincipalId)
         AZURE_AD_SERVICE_PRINCIPAL_KEY: $(servicePrincipalKey)
         AZURE_AD_SERVICE_PRINCIPAL_TENANT: $(servicePrincipalTenantId)
+
