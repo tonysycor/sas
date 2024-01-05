@@ -26,12 +26,7 @@ stages:
         version: '3.x'
         installationPath: $(Agent.ToolsDirectory)/dotnet
         performMultiLevelLookup: true
-    - task: AzurePowerShell@5
-      inputs:
-        azureSubscription: '#210000001C1737# Kst 195510 - SC-HUB DEV(4903d38f-fec1-4a2c-bd9f-79bb9eda788b)'
-        ScriptType: 'InlineScript'
-        Inline: 'Connect-AzAccount'
-        azurePowerShellVersion: 'LatestVersion'
+  
     - task: AzurePowerShell@5
       inputs:
         azureSubscription: '#210000001C1737# Kst 195510 - SC-HUB DEV(4903d38f-fec1-4a2c-bd9f-79bb9eda788b)'
