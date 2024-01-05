@@ -26,7 +26,12 @@ stages:
         version: '3.x'
         installationPath: $(Agent.ToolsDirectory)/dotnet
         performMultiLevelLookup: true
-
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+          Install-Module -Name Az -Repository PSGallery -Force
+          Update-Module -Name Az -Force
     - task: PowerShell@2
       inputs:
         filePath: 'sas.ps1'
