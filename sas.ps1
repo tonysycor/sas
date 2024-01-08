@@ -1,6 +1,6 @@
 
 # Authenticate with Azure using service principal credentials
-az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey --tenant $servicePrincipalTenantId 
+az login --service-principal -t $servicePrincipalTenantId  -u $servicePrincipalId -p $servicePrincipalKey 
 $storage_account_key = az storage account keys list --resource-group $resourcegroup --account-name $storageAccountName --query '[0].value' --output tsv
 
 # Create a SAS token for the blob container
