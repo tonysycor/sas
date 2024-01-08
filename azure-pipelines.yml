@@ -30,7 +30,7 @@ stages:
       inputs:
        targetType: 'filepath'
        filePath: 'sas.ps1'
-       arguments: '-resourcegroup $(resourcegroup) -storageAccountName $(storageAccountName) -containerName $(containerName) -blobName $(blobName) -sasPermissions $(sasPermissions) -sasExpiry $(sasExpiry)'
+       arguments: '-resourcegroup $(resourcegroup)lobName -servicePrincipalId $(servicePrincipalId) -servicePrincipalKey $(servicePrincipalKey) -tenantId $(tenantId) -storageAccountName $(storageAccountName) -containerName $(containerName) -blobName $(blobName) -sasPermissions $(sasPermissions) -sasExpiry $(sasExpiry))'
       env:
        servicePrincipalTenantId: $(servicePrincipalTenantId)
        servicePrincipalId: $(servicePrincipalId)
