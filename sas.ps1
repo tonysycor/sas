@@ -1,7 +1,16 @@
 
+# Authenticate with Azure using service principal credentials
+az login --service-principal --username $servicePrincipalId --password $servicePrincipalKey --tenant $servicePrincipalTenantId 
+$storage_account_key = az storage account keys list --resource-group $resourcegroup --account-name $storageAccountName --query '[0].value' --output tsv
 
-Connect-AzAccount -ServicePrincipal -Tenant $env:servicePrincipalTenantId -ApplicationId $env:servicePrincipalId -CertificateThumbprint $env:servicePrincipalKey
-
-$sasToken = az storage blob generate-sas --account-name $storageAccountName --container-name $containerName --name $blobName --permissions $sasPermissions --expiry $sasExpiry --output tsv
-
-Write-Host "Generated SAS token: $sasToken"
+# Create a SAS token for the blob container
+$sas_token = az storage container generate-sas `
+  --name $containerName `
+  --expiry (Get-Date).AddHours(1).ToString("yyyy-MM-ddTHH:mm:ssZ") `
+  --permissions "racwdl" `
+  --account-key $storage_account_key `
+  --account-name $storageAccountName `
+  --output tsv
+# Print the generated SAS token
+Write-Output "Generated SAS Token:"
+Write-Host "Generated SAS token: $sas_Token"
