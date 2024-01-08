@@ -3,12 +3,6 @@ trigger:
 - master
 variables:
   azureSubscription: '#210000001C1737# Kst 195510 - SC-HUB DEV(4903d38f-fec1-4a2c-bd9f-79bb9eda788b)'
-  storageAccountName: 'sycorazplcy'
-  containerName: 'basicpolicy'
-  blobName: 'basicpolicywithcoy2.csv'
-  sasPermissions: 'r'
-  sasExpiry: '2024-01-06T00:00:00Z'
-
 pool:
   vmImage: 'windows-latest'
 
@@ -26,15 +20,20 @@ stages:
         version: '3.x'
         installationPath: $(Agent.ToolsDirectory)/dotnet
         performMultiLevelLookup: true
-  
-    - task: AzurePowerShell@5
+    - task: PowerShell@2
+      displayName: 'Install Az module'
       inputs:
-        azureSubscription: '#210000001C1737# Kst 195510 - SC-HUB DEV(4903d38f-fec1-4a2c-bd9f-79bb9eda788b)'
-        ScriptType: 'FilePath'
-        ScriptPath: 'sas.ps1'
-        azurePowerShellVersion: 'LatestVersion'
+       targetType: 'inline'
+       script: 'Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser'
+    - task: PowerShell@2
+      displayName: 'Run PowerShell Script'
+      inputs:
+       targetType: 'filepath'
+       filePath: 'sas.ps1'
+       arguments: '-storageAccountName $(storageAccountName) -containerName $(containerName) -blobName $(blobName) -sasPermissions $(sasPermissions) -sasExpiry $(sasExpiry)'
       env:
-        AZURE_AD_SERVICE_PRINCIPAL_ID: $(servicePrincipalId)
-        AZURE_AD_SERVICE_PRINCIPAL_KEY: $(servicePrincipalKey)
-        AZURE_AD_SERVICE_PRINCIPAL_TENANT: $(servicePrincipalTenantId)
+       servicePrincipalTenantId: $(servicePrincipalTenantId)
+       servicePrincipalId: $(servicePrincipalId)
+       servicePrincipalKey: $(servicePrincipalKey)
+       
 
