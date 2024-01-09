@@ -50,7 +50,7 @@ stages:
       inputs:
         targetType: 'filepath'
         filePath: 'download.ps1'
-        arguments: '-destinationUrl $(destinationUrl) -downloadedFile $(downloadedFile) -containerName $(containerName) -blobName $(blobName) -storageAccountName $(storageAccountName)'
+        arguments: '-destinationUrl $(Build.ArtifactStagingDirectory) -downloadedFile $(downloadedFile) -containerName $(containerName) -blobName $(blobName) -storageAccountName $(storageAccountName)'
     
          
 
