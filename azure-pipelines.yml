@@ -35,7 +35,7 @@ stages:
       inputs:
         targetType: 'filepath'
         filePath: 'sas.ps1'
-        arguments: '-destinationUrl $(destinationUrl) -servicePrincipalId $(servicePrincipalId) -servicePrincipalKey $(servicePrincipalKey) -tenantId $(tenantId) -storageAccountName $(storageAccountName) -containerName $(containerName) -blobName $(blobName) -sasPermissions $(sasPermissions) -sasExpiry $(sasExpiry)'
+        arguments: '-destinationPath $(destinationPath) -servicePrincipalId $(servicePrincipalId) -servicePrincipalKey $(servicePrincipalKey) -tenantId $(tenantId) -storageAccountName $(storageAccountName) -containerName $(containerName) -blobName $(blobName) -sasPermissions $(sasPermissions) -sasExpiry $(sasExpiry)'
       env:
         servicePrincipalTenantId: $(servicePrincipalTenantId)
         servicePrincipalId: $(servicePrincipalId)
@@ -45,19 +45,3 @@ stages:
        targetPath: '$(Build.ArtifactStagingDirectory)'
        artifact: 'SASOutput'
       displayName: 'Publish SaS Output'
-
-  - job: DownloadBlob
-    displayName: 'Download CSV Blob'
-    dependsOn: GenerateSAS
-    steps:
-    - task: DownloadPipelineArtifact@2
-      inputs:
-       artifact: 'SASOutput'
-       path: '$(System.ArtifactsDirectory)'
-
-    - task: PowerShell@2
-      inputs:
-       targetType: 'filepath'
-       filePath: 'download.ps1'
-       arguments: '-destinationUrl "$(Build.ArtifactStagingDirectory)" -downloadedFile "$(downloadedFile)" -containerName "$(containerName)" -blobName "$(blobName)" -storageAccountName "$(storageAccountName)"'
-
