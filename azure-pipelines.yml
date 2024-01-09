@@ -3,7 +3,7 @@ trigger:
 variables:
   azureSubscription: '#210000001C1737# Kst 195510 - SC-HUB DEV(4903d38f-fec1-4a2c-bd9f-79bb9eda788b)'
   downloadedFile: 'basicpolicywithcoy2.csv'
-  destinationPath: ''
+  destinationPath: '$(Build.ArtifactStagingDirectory)\$downloadedFile'
 
 pool:
   vmImage: 'windows-latest'
@@ -34,7 +34,7 @@ stages:
       inputs:
         targetType: 'filepath'
         filePath: 'sas.ps1'
-        arguments: '-servicePrincipalId $(servicePrincipalId) -servicePrincipalKey $(servicePrincipalKey) -tenantId $(tenantId) -storageAccountName $(storageAccountName) -containerName $(containerName) -blobName $(blobName) -sasPermissions $(sasPermissions) -sasExpiry $(sasExpiry)'
+        arguments: '-destinationPath $(destinationPath) -servicePrincipalId $(servicePrincipalId) -servicePrincipalKey $(servicePrincipalKey) -tenantId $(tenantId) -storageAccountName $(storageAccountName) -containerName $(containerName) -blobName $(blobName) -sasPermissions $(sasPermissions) -sasExpiry $(sasExpiry)'
       env:
         servicePrincipalTenantId: $(servicePrincipalTenantId)
         servicePrincipalId: $(servicePrincipalId)
