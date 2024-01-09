@@ -40,17 +40,24 @@ stages:
         servicePrincipalTenantId: $(servicePrincipalTenantId)
         servicePrincipalId: $(servicePrincipalId)
         servicePrincipalKey: $(servicePrincipalKey) 
+    - task: PublishPipelineArtifact@1
+      inputs:
+       targetPath: '$(Build.ArtifactStagingDirectory)'
+       artifact: 'SASOutput'
+      displayName: 'Publish SaS Output'
 
   - job: DownloadBlob
     displayName: 'Download CSV Blob'
     dependsOn: GenerateSAS
     steps:
-    - task: PowerShell@2
-      displayName: 'Download CSV'
+    - task: DownloadPipelineArtifact@2
       inputs:
-        targetType: 'filepath'
-        filePath: 'download.ps1'
-        arguments: '-destinationUrl $(Build.ArtifactStagingDirectory) -downloadedFile $(downloadedFile) -containerName $(containerName) -blobName $(blobName) -storageAccountName $(storageAccountName)'
-    
-         
+       artifact: 'SASOutput'
+       path: '$(System.ArtifactsDirectory)'
+
+    - task: PowerShell@2
+      inputs:
+       targetType: 'filepath'
+       filePath: 'download.ps1'
+       arguments: '-destinationUrl "$(Build.ArtifactStagingDirectory)" -downloadedFile "$(downloadedFile)" -containerName "$(containerName)" -blobName "$(blobName)" -storageAccountName "$(storageAccountName)"'
 
