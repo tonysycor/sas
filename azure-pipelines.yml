@@ -1,8 +1,10 @@
-
 trigger:
 - master
 variables:
   azureSubscription: '#210000001C1737# Kst 195510 - SC-HUB DEV(4903d38f-fec1-4a2c-bd9f-79bb9eda788b)'
+  downloadedFile: 'basicpolicywithcoy2.csv'
+  destinationPath: ''
+
 pool:
   vmImage: 'windows-latest'
 
@@ -20,20 +22,42 @@ stages:
         version: '3.x'
         installationPath: $(Agent.ToolsDirectory)/dotnet
         performMultiLevelLookup: true
+
     - task: PowerShell@2
       displayName: 'Install Az module'
       inputs:
-       targetType: 'inline'
-       script: 'Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser'
+        targetType: 'inline'
+        script: 'Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser'
+
     - task: PowerShell@2
       displayName: 'Run PowerShell Script'
       inputs:
-       targetType: 'filepath'
-       filePath: 'sas.ps1'
-       arguments: '-servicePrincipalId $(servicePrincipalId) -servicePrincipalKey $(servicePrincipalKey) -tenantId $(tenantId) -storageAccountName $(storageAccountName) -containerName $(containerName) -blobName $(blobName) -sasPermissions $(sasPermissions) -sasExpiry $(sasExpiry)'
+        targetType: 'filepath'
+        filePath: 'sas.ps1'
+        arguments: '-servicePrincipalId $(servicePrincipalId) -servicePrincipalKey $(servicePrincipalKey) -tenantId $(tenantId) -storageAccountName $(storageAccountName) -containerName $(containerName) -blobName $(blobName) -sasPermissions $(sasPermissions) -sasExpiry $(sasExpiry)'
       env:
-       servicePrincipalTenantId: $(servicePrincipalTenantId)
-       servicePrincipalId: $(servicePrincipalId)
-       servicePrincipalKey: $(servicePrincipalKey)
-       
+        servicePrincipalTenantId: $(servicePrincipalTenantId)
+        servicePrincipalId: $(servicePrincipalId)
+        servicePrincipalKey: $(servicePrincipalKey) 
+
+- stage: DownloadBlob
+  jobs:
+  - job: DownloadBlob
+    displayName: 'Download CSV Blob'
+    dependsOn: GenerateSAS
+    steps:
+    - task: PowerShell@2
+      displayName: 'Download CSV'
+      inputs:
+        targetType: 'inline'
+        script: |
+    
+         $destinationPath = "$(Build.ArtifactStagingDirectory)\$downloadedFile"
+          # Construct the SAS URL for the blob
+         $sasUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/$blobName?$blobSasToken"
+
+          # Download the CSV file
+          Invoke-WebRequest -Uri $sasUrl -OutFile $destinationPath
+
+          Write-Host "Downloaded CSV file from '$sasUrl' to '$destinationPath'"
 
