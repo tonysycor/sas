@@ -9,7 +9,7 @@ param (
     [string]$blobName,
     [string]$sasPermissions,
     [string]$sasExpiry,
-    [string]$destinationUrl
+    [string]$destinationPath
 )
 
 # Install and import the Az module
@@ -25,5 +25,14 @@ Connect-AzAccount -ServicePrincipal -Tenant $tenantId -Credential $servicePrinci
 $blobSasToken = New-AzStorageBlobSASToken -Container $containerName -Blob $blobName -Permission $sasPermissions -ExpiryTime (Get-Date $sasExpiry)  -Context (New-AzStorageContext -StorageAccountName $storageAccountName) -FullUri
 
 Write-Host "Generated SAS token for blob '$blobName': $blobSasToken"
-Write-Host "##vso[task.setvariable variable=blobSasToken;isOutput=true]$blobSasToken"
+
+$sasUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/$blobName$($blobSasToken)"
+
+Write-Host "Constructed SAS URL: $sasUrl"
+
+# Download the CSV file
+Invoke-WebRequest -Uri $sasUrl -OutFile $destinationPath
+
+Write-Host "Downloaded CSV file from '$sasUrl' to '$destinationPath'"
+
 
