@@ -49,7 +49,7 @@ stages:
       inputs:
         targetType: 'filepath'
         filePath: 'download.ps1'
-        arguments: '-downloadedFile $(downloadedFile) -containerName $(containerName) -blobName $(blobName) -'
+        arguments: '-downloadedFile $(downloadedFile) -containerName $(containerName) -blobName $(blobName) -storageAccountName $(storageAccountName)'
     
          
 
