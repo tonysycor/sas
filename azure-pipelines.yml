@@ -40,8 +40,6 @@ stages:
         servicePrincipalId: $(servicePrincipalId)
         servicePrincipalKey: $(servicePrincipalKey) 
 
-- stage: DownloadBlob
-  jobs:
   - job: DownloadBlob
     displayName: 'Download CSV Blob'
     dependsOn: GenerateSAS
