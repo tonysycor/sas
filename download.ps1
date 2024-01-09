@@ -3,7 +3,8 @@ param (
     [string]$containerName,
     [string]$blobName,
     [string]$storageAccountName,
-    [string]$destinationPath
+    [string]$destinationPath,
+    [string]$destinationUrl
     
 )
 
