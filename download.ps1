@@ -9,7 +9,7 @@ param (
 
 
 # Construct the SAS URL for the blob
-$sasUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/$blobName?$blobSasToken"
+$sasUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/$blobName$blobSasToken"
 # Download the CSV file
 Invoke-WebRequest -Uri $sasUrl -OutFile $destinationPath
 
