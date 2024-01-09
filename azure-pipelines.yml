@@ -30,7 +30,7 @@ stages:
         script: 'Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser'
 
     - task: PowerShell@2
-      displayName: 'Run PowerShell Script'
+      displayName: 'Generate SAS'
       inputs:
         targetType: 'filepath'
         filePath: 'sas.ps1'
@@ -47,15 +47,9 @@ stages:
     - task: PowerShell@2
       displayName: 'Download CSV'
       inputs:
-        targetType: 'inline'
-        script: |
+        targetType: 'filepath'
+        filePath: 'download.ps1'
+        arguments: '-downloadedFile $(downloadedFile) -containerName $(containerName) -blobName $(blobName) -'
     
-         $destinationPath = "$(Build.ArtifactStagingDirectory)\$downloadedFile"
-          # Construct the SAS URL for the blob
-         $sasUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/$blobName?$blobSasToken"
-
-          # Download the CSV file
-          Invoke-WebRequest -Uri $sasUrl -OutFile $destinationPath
-
-          Write-Host "Downloaded CSV file from '$sasUrl' to '$destinationPath'"
+         
 
