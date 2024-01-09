@@ -11,12 +11,13 @@ param (
 Write-Host "storageAccountName: $storageAccountName"
 Write-Host "containerName: $containerName"
 Write-Host "blobName: $blobName"
-$blobSasToken = $env:blobSasToken
-Write-Host "blobSasToken in download.ps1: $blobSasToken"
+$blobSasToken1 = "$($blobSasToken)"
+
+Write-Host "blobSasToken in download.ps1: $blobSasToken1"
 Write-Host "blobSasToken: $blobSasToken"
 
 # Construct the SAS URL for the blob
-$sasUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/$blobName$($blobSasToken)"
+$sasUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/$blobName$($blobSasToken1)"
 
 Write-Host "Constructed SAS URL: $sasUrl"
 

@@ -25,5 +25,5 @@ Connect-AzAccount -ServicePrincipal -Tenant $tenantId -Credential $servicePrinci
 $blobSasToken = New-AzStorageBlobSASToken -Container $containerName -Blob $blobName -Permission $sasPermissions -ExpiryTime (Get-Date $sasExpiry) -Context (New-AzStorageContext -StorageAccountName $storageAccountName)
 
 Write-Host "Generated SAS token for blob '$blobName': $blobSasToken"
-Write-Host "##vso[task.setvariable variable=blobSasToken]$blobSasToken"
+Write-Host "##vso[task.setvariable variable=blobSasToken;isOutput=true]$blobSasToken"
 
