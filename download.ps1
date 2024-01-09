@@ -11,12 +11,13 @@ param (
 Write-Host "storageAccountName: $storageAccountName"
 Write-Host "containerName: $containerName"
 Write-Host "blobName: $blobName"
-$blobSasToken | Get-Content "$destinationUrl\sas.txt"
+$blobSasToken = $env:blobSasToken
+Write-Host "blobSasToken in download.ps1: $blobSasToken"
 Write-Host "blobSasToken: $blobSasToken"
 
 # Construct the SAS URL for the blob
 $sasUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/$blobName$($blobSasToken)"
-https://sycorazplcy.blob.core.windows.net/basicpolicy/basicpolicywithcoy2.csv
+
 Write-Host "Constructed SAS URL: $sasUrl"
 
 # Download the CSV file
