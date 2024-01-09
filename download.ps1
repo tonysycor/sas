@@ -11,8 +11,9 @@ param (
 Write-Host "storageAccountName: $storageAccountName"
 Write-Host "containerName: $containerName"
 Write-Host "blobName: $blobName"
-Write-Host "blobSasToken: $blobSasToken"
 $blobSasToken | Get-Content "$destinationUrl\sas.txt"
+Write-Host "blobSasToken: $blobSasToken"
+
 # Construct the SAS URL for the blob
 $sasUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/$blobName$($blobSasToken)"
 https://sycorazplcy.blob.core.windows.net/basicpolicy/basicpolicywithcoy2.csv
