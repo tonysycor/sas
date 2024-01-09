@@ -2,11 +2,12 @@ param (
     [string]$downloadedFile,
     [string]$containerName,
     [string]$blobName,
-    [string]$storageAccountName
+    [string]$storageAccountName,
+    [string]$destinationPath
     
 )
 
-$destinationPath = "$(Build.ArtifactStagingDirectory)\$downloadedFile"
+
 # Construct the SAS URL for the blob
 $sasUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/$blobName?$blobSasToken"
 # Download the CSV file
