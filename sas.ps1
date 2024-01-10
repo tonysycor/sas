@@ -22,7 +22,8 @@ $servicePrincipalCredential = New-Object PSCredential -ArgumentList ($servicePri
 Connect-AzAccount -ServicePrincipal -Tenant $tenantId -Credential $servicePrincipalCredential
 
 # Generate SAS token for the blob
-$blobSasToken = New-AzStorageBlobSASToken -Container $containerName -Blob $blobName -Permission $sasPermissions -ExpiryTime (Get-Date $sasExpiry)  -Context (New-AzStorageContext -StorageAccountName $storageAccountName) -FullUri
+$blobSasToken = New-AzStorageBlobSASToken -Container $containerName -Blob $blobName -Permission $sasPermissions -ExpiryTime (Get-Date $sasExpiry)  -Context (New-AzStorageContext -StorageAccountName $storageAccountName)
+
 
 Write-Host "Generated SAS token for blob '$blobName': $blobSasToken"
 
