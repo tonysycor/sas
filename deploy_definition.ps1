@@ -47,7 +47,7 @@ foreach ($policy in $policies) {
     $policyAssignment = New-AzPolicyAssignment -Name $policyName -PolicyDefinition $policyDefinition -Scope "/providers/Microsoft.Management/managementGroups/$managementGroupId"
 
     # Check if remediation is specified in the CSV
-    if ($policy.Remediation) {
+    
         $remediationTask = @{
             DisplayName = "RemediationTask-$policyName"
             PolicyAssignmentId = $policyAssignment.ResourceId
@@ -56,8 +56,6 @@ foreach ($policy in $policies) {
 
         $remediationTask = New-AzPolicyRemediationTask @remediationTask
         Write-Host "Created policy definition, assignment, and remediation for '$policyName' in management group '$managementGroupId'"
-    }
-    else {
-        Write-Host "Created policy definition and assignment for '$policyName' in management group '$managementGroupId'"
-    }
+    
+    
 }
