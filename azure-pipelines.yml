@@ -5,6 +5,7 @@ variables:
   downloadedFile: 'basicpolicywithcoy2.csv'
   destinationPath: '$(Build.ArtifactStagingDirectory)\$downloadedFile'
   destinationUrl: '$(Build.ArtifactStagingDirectory)'
+ 
 
 pool:
   vmImage: 'windows-latest'
