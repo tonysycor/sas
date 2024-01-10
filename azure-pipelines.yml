@@ -13,6 +13,22 @@ pool:
 stages:
 - stage: GenerateSAS
   jobs:
+  - job: CopyFilesJob
+    displayName: 'Copy Files to Artifact Staging Directory'
+    steps:
+    - checkout: self
+    - task: CopyFiles@2
+      displayName: 'Copy Files to Artifact Staging Directory'
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)'
+        Contents: 'deploy*.*' # Adjust the pattern based on your file structure
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Artifact'
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)'
+        artifact: 'copiedFiles'
   - job: GenerateSAS
     displayName: 'Generate SAS Token'
     steps:
@@ -47,20 +63,6 @@ stages:
        artifact: 'SASOutput'
       displayName: 'Publish SaS Output'
 
-  - job: CopyFilesJob
-    displayName: 'Copy Files to Artifact Staging Directory'
-    steps:
-    - checkout: self
+ 
 
-    - task: CopyFiles@2
-      displayName: 'Copy Files to Artifact Staging Directory'
-      inputs:
-        SourceFolder: '$(Build.SourcesDirectory)'
-        Contents: 'deploy*.*' # Adjust the pattern based on your file structure
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-    - task: PublishPipelineArtifact@1
-      displayName: 'Publish Artifact'
-      inputs:
-        targetPath: '$(Build.ArtifactStagingDirectory)'
-        artifact: 'copiedFiles'
+   
