@@ -15,9 +15,11 @@ param (
 # Convert CSV content to PowerShell objects
 $policies = ConvertFrom-Csv $policyfile
 
+$servicePrincipalSecureString = ConvertTo-SecureString $servicePrincipalKey -AsPlainText -Force
+$servicePrincipalCredential = New-Object PSCredential -ArgumentList ($servicePrincipalId, $servicePrincipalSecureString)
+Connect-AzAccount -ServicePrincipal -Tenant $tenantId -Credential $servicePrincipalCredential
 
 
-Connect-AzAccount -ServicePrincipal -Tenant $tenantId -ApplicationId $servicePrincipalId -CertificateThumbprint $servicePrincipalKey
 
 # Loop through each row in the CSV and create policy definitions with remediation
 foreach ($policy in $policies) {
