@@ -26,12 +26,10 @@ $blobSasToken = New-AzStorageBlobSASToken -Container $containerName -Blob $blobN
 
 Write-Host "Generated SAS token for blob '$blobName': $blobSasToken"
 
-$sasUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/$blobName$($blobSasToken)"
 
-Write-Host "Constructed SAS URL: $sasUrl"
 
 # Download the CSV file
-Invoke-WebRequest -Uri $sasUrl -OutFile $destinationPath
+Invoke-WebRequest -Uri $blobSasToken  -OutFile $destinationPath
 
 Write-Host "Downloaded CSV file from '$sasUrl' to '$destinationPath'"
 
