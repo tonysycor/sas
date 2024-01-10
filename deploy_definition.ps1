@@ -17,7 +17,7 @@ $policies = ConvertFrom-Csv $policyfile
 
 
 
-Connect-AzAccount -ServicePrincipal -Tenant $tenantId -ApplicationId $servicePrincipalId -CertificateThumbprint $servicePrincipalKey -ServicePrincipal
+Connect-AzAccount -ServicePrincipal -Tenant $tenantId -ApplicationId $servicePrincipalId -CertificateThumbprint $servicePrincipalKey
 
 # Loop through each row in the CSV and create policy definitions with remediation
 foreach ($policy in $policies) {
