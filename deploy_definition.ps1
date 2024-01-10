@@ -24,9 +24,10 @@ Connect-AzAccount -ServicePrincipal -Tenant $tenantId -Credential $servicePrinci
 # Loop through each row in the CSV and create policy definitions with remediation
 foreach ($policy in $policies) {
     $policyName = $policy.Name
-    $policyRule = ConvertFrom-Json $policy.Parameters
+    $policyRule = ConvertFrom-Json $policy.
     $managementScope = $policy.Management_Scope
-    $policyType = $policy
+    $policyType = $policy.Type
+    $parameters = $policy.
 
     # Conditionally set $managementGroupId based on $managementScope
     switch ($managementScope) {
@@ -42,6 +43,8 @@ foreach ($policy in $policies) {
         DisplayName = $policyName
         PolicyRule  = $policyRule
         Mode        = 'All'
+        policyType  = $policyType
+
 
     }
 
