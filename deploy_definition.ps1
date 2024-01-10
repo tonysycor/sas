@@ -26,6 +26,7 @@ foreach ($policy in $policies) {
     $policyName = $policy.Name
     $policyRule = ConvertFrom-Json $policy.Parameters
     $managementScope = $policy.Management_Scope
+    $policyType = $policy
 
     # Conditionally set $managementGroupId based on $managementScope
     switch ($managementScope) {
@@ -41,6 +42,7 @@ foreach ($policy in $policies) {
         DisplayName = $policyName
         PolicyRule  = $policyRule
         Mode        = 'All'
+
     }
 
     $policyDefinition = New-AzPolicyDefinition @definition
