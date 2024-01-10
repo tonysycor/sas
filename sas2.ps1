@@ -31,9 +31,10 @@ $storageContainer = Get-AzStorageContainer -Context $storageAccount.Context -Nam
 $storageBlob = Get-AzStorageBlob -Container $storageContainer.Name -Blob $blobName -Context $storageAccount.Context
 # Generate SAS token
 $sasToken = New-AzStorageBlobSASToken -Container $storageContainer.Name -Blob $storageBlob.Name -Permission rwdl -Context $storageAccount.Context
-
+Write-Output "SAS Token: $sasToken"
 # Download Blob content using SAS token
-$blobUrlWithSas = $storageBlob.ICloudBlob.Uri + $sasToken
+$blobUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/$blobName"
+$blobUrlWithSas = $blobUrl  + $sasToken
 $blobContent = Invoke-RestMethod -Uri $blobUrlWithSas -Method Get
 
 
