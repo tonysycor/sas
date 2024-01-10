@@ -34,13 +34,11 @@ $sasToken = New-AzStorageBlobSASToken -Container $storageContainer.Name -Blob $s
 Write-Output "SAS Token: $sasToken"
 # Download Blob content using SAS token
 $blobUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/$blobName"
-$blobUrlWithSas = $blobUrl  + $sasToken
-$blobContent = Invoke-RestMethod -Uri $blobUrlWithSas -Method Get
-
+$blobUrlWithSas = $blobUrl  + "?" + $sasToken
+Write-Output "Full url with Sas: $blobUrlWithSas"
+Invoke-WebRequest -Uri $blobUrlWithSas  -OutFile $destinationPath\$blobName 
 
 
 # Output SAS token
 Write-Output "SAS Token: $sasToken"
-# Save content to a local file
-Set-Content -Path $destinationPath\$blobName -Value $blobContent
-# Save content to a local file
+
