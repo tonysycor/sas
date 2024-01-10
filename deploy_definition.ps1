@@ -1,24 +1,21 @@
 param (
-    [string]$sasToken,
-    [string]$storageAccountName,
-    [string]$containerName,
-    [string]$blobName,
+    
+    [string]$servicePrincipalId ,
+    [string]$servicePrincipalKey,
+    [string]$tenantId,
+    [string]$policyfile,
+    [string]$companyManagemntScope
     
 )
 
-# Construct the SAS URL for the blob
-$sasUrl = "https://$storageAccountName.blob.core.windows.net/$containerName/$blobName?$sasToken"
 
-# Download the CSV file
-$csvContent = Invoke-RestMethod -Uri $sasUrl
+
+
 
 # Convert CSV content to PowerShell objects
-$policies = ConvertFrom-Csv $csvContent
+$policies = ConvertFrom-Csv $policyfile
 
-# Authenticate to Azure using service principal
-$servicePrincipalId = "your-service-principal-id"
-$servicePrincipalKey = "your-service-principal-key"
-$tenantId = "your-tenant-id"
+
 
 Connect-AzAccount -ServicePrincipal -Tenant $tenantId -ApplicationId $servicePrincipalId -CertificateThumbprint $servicePrincipalKey -ServicePrincipal
 
@@ -31,7 +28,7 @@ foreach ($policy in $policies) {
     # Conditionally set $managementGroupId based on $managementScope
     switch ($managementScope) {
         "Company" {
-            $managementGroupId = "your-company-management-group-id"
+            $managementGroupId = $companyManagemntScope
         }
         default {
             $managementGroupId = $managementScope
