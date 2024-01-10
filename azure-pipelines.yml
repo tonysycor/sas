@@ -35,7 +35,7 @@ stages:
       displayName: 'Generate SAS'
       inputs:
         targetType: 'filepath'
-        filePath: 'sas.ps1'
+        filePath: 'sas2.ps1'
         arguments: '-resourceGroupName $(resourceGroupName) -destinationPath $(destinationPath) -servicePrincipalId $(servicePrincipalId) -servicePrincipalKey $(servicePrincipalKey) -tenantId $(tenantId) -storageAccountName $(storageAccountName) -containerName $(containerName) -blobName $(blobName) -sasPermissions $(sasPermissions) -sasExpiry $(sasExpiry)'
       env:
         servicePrincipalTenantId: $(servicePrincipalTenantId)
