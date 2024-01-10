@@ -27,8 +27,8 @@ Connect-AzAccount -ServicePrincipal -Tenant $tenantId -Credential $servicePrinci
 # Generate SAS token for the blob
 #$blobSasToken = New-AzStorageBlobSASToken -Container $containerName -Blob $blobName -Permission $sasPermissions -ExpiryTime (Get-Date $sasExpiry)  -Context (New-AzStorageContext -StorageAccountName $storageAccountName)
 #$blobSasToken = New-AzStorageAccountSASToken -Context $context -Service Blob,File,Table,Queue -ResourceType Service,Container,Object -Permission racwdlup
-$blobSasToken = New-AzStorageAccountSASToken  -Service Blob -ResourceType Service,Container,Object -Permission $sasPermissions -ExpiryTime $sasExpiry  -Context (New-AzStorageContext -StorageAccountName $storageAccountName)
-
+#$blobSasToken = New-AzStorageAccountSASToken  -Service Blob -ResourceType Service,Container,Object -Permission $sasPermissions -ExpiryTime $sasExpiry  -Context (New-AzStorageContext -StorageAccountName $storageAccountName)
+$blobSasToken = New-AzStorageBlobSASToken -Container $containerName -Blob $blobName -Permission $sasPermissions -ExpiryTime $sasExpiry -Context (New-AzStorageContext -StorageAccountName $storageAccountName)
 Write-Host "Generated SAS token for storage account '$storageAccountName':"
 Write-Host "Generated SAS token for blob '$blobName': $blobSasToken"
 
