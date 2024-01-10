@@ -15,6 +15,13 @@ param (
 
 
 )
+Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser
+Import-Module Az -Force 
+
+# Connect to Azure using the service principal
+$servicePrincipalSecureString = ConvertTo-SecureString $servicePrincipalKey -AsPlainText -Force
+$servicePrincipalCredential = New-Object PSCredential -ArgumentList ($servicePrincipalId, $servicePrincipalSecureString)
+Connect-AzAccount -ServicePrincipal -Tenant $tenantId -Credential $servicePrincipalCredential
 $storageAccount = Get-AzStorageAccount -ResourceGroupName $resourceGroupName -AccountName $storageAccountName
 
 # Get Storage Container
