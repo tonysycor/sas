@@ -62,7 +62,25 @@ stages:
        targetPath: '$(Build.ArtifactStagingDirectory)'
        artifact: 'SASOutput'
       displayName: 'Publish SaS Output'
+  - job: 
+    displayName: ' Generate Objects'
+    steps:
+    - checkout: self
 
- 
-
+    - task: PowerShell@2
+      displayName: 'Join CSV and Json policies to a single table'
+      inputs:
+        targetType: 'filepath'
+        filePath: 'policy.ps1'
+        arguments: '-resourceGroupName $(resourceGroupName) -destinationPath $(destinationPath) -servicePrincipalId $(servicePrincipalId) -servicePrincipalKey $(servicePrincipalKey) -tenantId $(tenantId) -storageAccountName $(storageAccountName) -containerName $(containerName) -blobName $(blobName) -sasPermissions $(sasPermissions) -sasExpiry $(sasExpiry)'
+      env:
+        servicePrincipalTenantId: $(servicePrincipalTenantId)
+        servicePrincipalId: $(servicePrincipalId)
+        servicePrincipalKey: $(servicePrincipalKey) 
+    - task: PublishPipelineArtifact@1
+      inputs:
+       targetPath: '$(Build.ArtifactStagingDirectory)'
+       artifact: 'JSONOutput'
+      displayName: 'Publish SaS Output'
+  - 
    
