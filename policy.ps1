@@ -15,6 +15,7 @@ param (
 
 )
 # Read the CSV file
+$policyCsvPath = 
 $policyCsv = Import-Csv -Path $policyCsvPath
 
 # Initialize an array to store management scopes
@@ -85,5 +86,10 @@ foreach ($row in $policyCsv) {
    }
 }
 $jsonData = $results | ConvertTo-Json
+$outputFilePath = "$destinationPath\Policies.json"
+# Output SAS token
+
+$jsonData | Set-Content -Path $outputFilePath
+Write-Host "SAS token saved to: $outputFilePath"
 
 
