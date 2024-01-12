@@ -3,7 +3,7 @@ trigger:
 variables:
   azureSubscription: '#210000001C1737# Kst 195510 - SC-HUB DEV(4903d38f-fec1-4a2c-bd9f-79bb9eda788b)'
   downloadedFile: 'basicpolicywithcoy2.csv'
-  destinationPath: '$(Build.ArtifactStagingDirectory)\$downloadedFile'
+  destinationPath: '$(Build.ArtifactStagingDirectory)'
   destinationUrl: '$(Build.ArtifactStagingDirectory)'
  
 
@@ -21,7 +21,7 @@ stages:
       displayName: 'Copy Files to Artifact Staging Directory'
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)'
-        Contents: 'deploy*.*' # Adjust the pattern based on your file structure
+        Contents: 'policy.ps1' # Adjust the pattern based on your file structure
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: PublishPipelineArtifact@1
@@ -69,26 +69,7 @@ stages:
        targetPath: '$(Build.ArtifactStagingDirectory)'
        artifact: 'SASOutput'
       displayName: 'Publish SaS Output'
-  - job: 
-    displayName: ' Generate Objects'
-    dependsOn: 'GenerateSAS'
-    steps:
-    - checkout: self
+  
 
-    - task: PowerShell@2
-      displayName: 'Join CSV and Json policies to a single table'
-      inputs:
-        targetType: 'filepath'
-        filePath: 'policy.ps1'
-        arguments: '-policyPath $(policyPath) -resourceGroupName $(resourceGroupName) -destinationPath $(destinationPath) -servicePrincipalId $(servicePrincipalId) -servicePrincipalKey $(servicePrincipalKey) -tenantId $(tenantId) -storageAccountName $(storageAccountName) -containerName $(containerName) -blobName $(blobName) -sasPermissions $(sasPermissions) -sasExpiry $(sasExpiry)'
-      env:
-        servicePrincipalTenantId: $(servicePrincipalTenantId)
-        servicePrincipalId: $(servicePrincipalId)
-        servicePrincipalKey: $(servicePrincipalKey) 
-    - task: PublishPipelineArtifact@1
-      inputs:
-       targetPath: '$(Build.ArtifactStagingDirectory)'
-       artifact: 'JSONOutput'
-      displayName: 'Publish SaS Output'
   
    
