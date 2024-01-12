@@ -69,11 +69,7 @@ stages:
        targetPath: '$(Build.ArtifactStagingDirectory)'
        artifact: 'SASOutput'
       displayName: 'Publish SaS Output'
-  - job: 
-    displayName: ' Generate Objects'
-    dependsOn: 'GenerateSAS'
-    steps:
-    - checkout: self
+  
 
   
    
