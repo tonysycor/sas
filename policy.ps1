@@ -18,7 +18,7 @@ param (
 )
 
 # Read the CSV file
-$csvPath = Join-Path $(System.DefaultWorkingDirectory)\"_Azure Policy\SASOutput\$blobName"
+$csvPath = Join-Path $destinationUrl "_Azure Policy\SASOutput\$blobName"
 
 $policyCsv = Import-Csv -Path $csvPath
 
