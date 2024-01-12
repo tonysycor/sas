@@ -20,7 +20,7 @@ param (
 
 
 # Read the CSV file
-$myHelp= "$(System.DefaultWorkingDirectory)/AzurePolicy/SASOutput/basicpolicywithcoy2.csv"
+
 Write-Host "SAS token saved to: $myHelp"
 
 $policyCsv = Import-Csv -Path $myHelp
