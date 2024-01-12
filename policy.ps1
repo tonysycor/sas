@@ -10,16 +10,17 @@ param (
     [string]$sasExpiry,
     [string]$destinationUrl,
     [string]$resourceGroupName,
-    [string]$policyPath
+    [string]$myHelp
     
     
 
 
 )
-$policyPath="System.DefaultWorkingDirectory"
+
+
 
 # Read the CSV file
-$policyCsv = Import-Csv -Path $($policyPath)/AzurePolicy/SASOutput/$blobName
+$policyCsv = Import-Csv -Path $myHelp
 
 
 # Initialize an array to store management scopes
