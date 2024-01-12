@@ -19,7 +19,7 @@ param (
 
 # Read the CSV file
 
-$policyCsv = Import-Csv -Path $destinationUrl\$blobName
+$policyCsv = Import-Csv -Path $destinationUrl\_Azure Policy\SASOutput\$blobName
 
 # Initialize an array to store management scopes
 $managementScopes = @()
