@@ -21,7 +21,7 @@ stages:
       displayName: 'Copy Files to Artifact Staging Directory'
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)'
-        Contents: 'deploy*.*' # Adjust the pattern based on your file structure
+        Contents: 'policy.ps1' # Adjust the pattern based on your file structure
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: PublishPipelineArtifact@1
