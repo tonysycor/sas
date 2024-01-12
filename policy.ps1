@@ -20,6 +20,7 @@ param (
 
 
 # Read the CSV file
+$myHelp= "$(System.DefaultWorkingDirectory)/AzurePolicy/SASOutput/basicpolicywithcoy2.csv"
 $policyCsv = Import-Csv -Path $myHelp
 
 
