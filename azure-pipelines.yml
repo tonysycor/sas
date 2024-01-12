@@ -29,6 +29,13 @@ stages:
       inputs:
         targetPath: '$(Build.ArtifactStagingDirectory)'
         artifact: 'copiedFiles'
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download Artifact'
+      inputs:
+       artifactName: 'copiedFiles'  # Should match the name of the artifact published
+       path: $(System.ArtifactsDirectory)
+    # other optional inputs as needed
+
   - job: GenerateSAS
     displayName: 'Generate SAS Token'
     steps:
