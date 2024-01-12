@@ -15,8 +15,8 @@ param (
 
 
 )
-Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser
-Import-Module Az -Force 
+#Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser
+#Import-Module Az -Force 
 
 # Connect to Azure using the service principal
 $servicePrincipalSecureString = ConvertTo-SecureString $servicePrincipalKey -AsPlainText -Force
