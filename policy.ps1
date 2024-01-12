@@ -19,7 +19,7 @@ param (
 
 # Read the CSV file
 
-$policyCsv = Import-Csv -Path $destinationPath\$policyPath
+$policyCsv = Import-Csv -Path $destinationPath\$blobName
 
 # Initialize an array to store management scopes
 $managementScopes = @()
