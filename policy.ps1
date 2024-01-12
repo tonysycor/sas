@@ -28,6 +28,8 @@ $policyCsv = Import-Csv -Path $myHelp
 
 # Initialize an array to store management scopes
 $managementScopes = @()
+Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser
+Import-Module Az -Force 
 
 # Iterate over each row in the CSV and extract the management scope
 foreach ($row in $policyCsv) {
