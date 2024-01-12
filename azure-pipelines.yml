@@ -72,7 +72,7 @@ stages:
       inputs:
         targetType: 'filepath'
         filePath: 'policy.ps1'
-        arguments: '-resourceGroupName $(resourceGroupName) -destinationPath $(destinationPath) -servicePrincipalId $(servicePrincipalId) -servicePrincipalKey $(servicePrincipalKey) -tenantId $(tenantId) -storageAccountName $(storageAccountName) -containerName $(containerName) -blobName $(blobName) -sasPermissions $(sasPermissions) -sasExpiry $(sasExpiry)'
+        arguments: '-policyPath $(policyPath) -resourceGroupName $(resourceGroupName) -destinationPath $(destinationPath) -servicePrincipalId $(servicePrincipalId) -servicePrincipalKey $(servicePrincipalKey) -tenantId $(tenantId) -storageAccountName $(storageAccountName) -containerName $(containerName) -blobName $(blobName) -sasPermissions $(sasPermissions) -sasExpiry $(sasExpiry)'
       env:
         servicePrincipalTenantId: $(servicePrincipalTenantId)
         servicePrincipalId: $(servicePrincipalId)
