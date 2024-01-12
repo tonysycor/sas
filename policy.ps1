@@ -8,7 +8,7 @@ param (
     [string]$blobName,
     [string]$sasPermissions,
     [string]$sasExpiry,
-    [string]$destinationPath,
+    [string]$destinationUrl,
     [string]$resourceGroupName,
     [string]$policyPath
     
@@ -19,7 +19,7 @@ param (
 
 # Read the CSV file
 
-$policyCsv = Import-Csv -Path $destinationPath\$blobName
+$policyCsv = Import-Csv -Path $destinationUrl\$blobName
 
 # Initialize an array to store management scopes
 $managementScopes = @()
@@ -89,7 +89,7 @@ foreach ($row in $policyCsv) {
    }
 }
 $jsonData = $results | ConvertTo-Json
-$outputFilePath = "$destinationPath\Policies.json"
+$outputFilePath = "$destinationUrl\Policies.json"
 # Output SAS token
 
 $jsonData | Set-Content -Path $outputFilePath
