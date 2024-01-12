@@ -18,8 +18,7 @@ param (
 )
 
 # Read the CSV file
-$csvPath = Join-Path $destinationUrl "_Azure` Policy\SASOutput\$blobName"
-Import-Csv -Path $csvPath
+$policyCsv = Import-Csv -Path $destinationUrl\_AzurePolicy\SASOutput\$blobName
 
 
 # Initialize an array to store management scopes
