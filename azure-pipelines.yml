@@ -82,5 +82,5 @@ stages:
        targetPath: '$(Build.ArtifactStagingDirectory)'
        artifact: 'JSONOutput'
       displayName: 'Publish SaS Output'
-  - 
+  
    
