@@ -9,14 +9,17 @@ param (
     [string]$sasPermissions,
     [string]$sasExpiry,
     [string]$destinationPath,
-    [string]$resourceGroupName
+    [string]$resourceGroupName,
+    [string]$policyPath
+    
     
 
 
 )
+
 # Read the CSV file
-$policyCsvPath = 
-$policyCsv = Import-Csv -Path $policyCsvPath
+$destinationPath
+$policyCsv = Import-Csv -Path $policyCsvPath\$policyPath
 
 # Initialize an array to store management scopes
 $managementScopes = @()
