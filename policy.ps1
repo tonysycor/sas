@@ -16,9 +16,10 @@ param (
 
 
 )
+$policyPath="System.DefaultWorkingDirectory"
 
 # Read the CSV file
-$policyCsv = Import-Csv -Path $destinationUrl\_AzurePolicy\SASOutput\$blobName
+$policyCsv = Import-Csv -Path $($policyPath)/AzurePolicy/SASOutput/$blobName
 
 
 # Initialize an array to store management scopes
